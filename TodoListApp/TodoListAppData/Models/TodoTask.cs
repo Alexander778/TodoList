@@ -1,4 +1,6 @@
-﻿namespace TodoListAppData.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TodoListAppData.Models
 {
     public class TodoTask
     {
@@ -8,6 +10,8 @@
         public int StatusId { get; set; }
 
         public virtual Status Status { get; set; }
+
+        [NotMapped]
         public virtual Category Category { get; set; }
     }
 }
