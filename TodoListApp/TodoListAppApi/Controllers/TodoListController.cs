@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TodoListAppBusiness.Interfaces;
+using TodoListAppData.Models.Inputs;
 
 namespace TodoListAppApi.Controllers
 {
@@ -6,10 +8,19 @@ namespace TodoListAppApi.Controllers
     [Route("/todolist")]
     public class TodoListController: ControllerBase
     {
-        [HttpGet]
-        public IActionResult TodoListTest() 
+        private readonly ITodoListService _todoListService;
+
+        public TodoListController(ITodoListService todoListService)
         {
-            return Ok("test");
+            _todoListService = todoListService;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddUser([FromBody] UserInput userInput) 
+        {
+            var userCreation = await _todoListService.AddUser(userInput);
+
+            return Ok(userCreation);
         }
     }
 }
