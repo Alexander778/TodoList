@@ -16,6 +16,14 @@ builder.Services.AddDbContext<TodoListDbContext>(builder => builder.UseSqlServer
 builder.Services.AddScoped<TodoListDbContext>();
 builder.Services.AddTransient<ITodoListService, TodoListService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowMyOrigin",
+    builder => builder.WithOrigins("http://localhost:8080")
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,5 +37,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.MapControllers();
+
+app.UseCors("AllowMyOrigin");
 
 app.Run();
