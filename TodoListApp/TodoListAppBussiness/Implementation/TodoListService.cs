@@ -38,6 +38,23 @@ namespace TodoListAppBusiness.Implementation
 
             return await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<int> UpdateUser(UserInput userInput)
+        {
+            var userToUpdate = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userInput.Id);
+            if (userToUpdate == null)
+            {
+                throw new ArgumentException("User was not found. Nothing to update");
+            }
+
+            userToUpdate.Name = userInput.Name;
+            userToUpdate.Surname = userInput.Surname;
+
+            _dbContext.Users.Update(userToUpdate);
+
+            return await _dbContext.SaveChangesAsync();
+        }
+
         #endregion
 
         #region Category CRUD
@@ -78,9 +95,9 @@ namespace TodoListAppBusiness.Implementation
             return await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<int> UpdateCategory(int id, CategoryInput categoryInput)
+        public async Task<int> UpdateCategory(CategoryInput categoryInput)
         {
-            var categoryToUpdate = _dbContext.Categories.FirstOrDefault(i => i.Id == id);
+            var categoryToUpdate = _dbContext.Categories.FirstOrDefault(i => i.Id == categoryInput.Id);
             if (categoryToUpdate == null)
             {
                 throw new ArgumentNullException("Category was not found");

@@ -1,15 +1,17 @@
 <template>
   <div>
     <UserPanel />
+    <TodoListPanel />
   </div>
 </template>
 
 <script>
 import UserPanel from './components/UserPanel.vue';
+import TodoListPanel from './components/TodoListPanel.vue';
 
 export default {
   name: 'App',
-  components: { UserPanel }
+  components: { UserPanel, TodoListPanel }
 }
 </script>
 

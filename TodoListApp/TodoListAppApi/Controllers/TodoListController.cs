@@ -35,6 +35,15 @@ namespace TodoListAppApi.Controllers
             return Ok(userCreation);
         }
 
+        [HttpPost]
+        [Route("update-user")]
+        public async Task<IActionResult> UpdateUser([FromBody] UserInput userInput)
+        {
+            var userCreation = await _todoListService.UpdateUser(userInput);
+
+            return Ok(userCreation);
+        }
+
         #endregion
 
         #region Category
@@ -58,15 +67,15 @@ namespace TodoListAppApi.Controllers
         }
 
         [HttpPost]
-        [Route("update-category/{id}")]
-        public async Task<IActionResult> UpdateCategory(int id, [FromBody] CategoryInput categoryInput)
+        [Route("update-category")]
+        public async Task<IActionResult> UpdateCategory([FromBody] CategoryInput categoryInput)
         {
-            var categoryCreation = await _todoListService.UpdateCategory(id, categoryInput);
+            var categoryCreation = await _todoListService.UpdateCategory(categoryInput);
 
             return Ok(categoryCreation);
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Route("remove-category/{id}")]
         public async Task<IActionResult> RemoveCategory(int id)
         {
