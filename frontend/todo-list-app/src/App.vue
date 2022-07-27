@@ -1,7 +1,7 @@
 <template>
   <div>
-    <UserPanel />
-    <TodoListPanel />
+    <UserPanel @updateUserId="setupSelectedUser" />
+    <TodoListPanel :selectedUserId="selectedUserId" />
   </div>
 </template>
 
@@ -11,7 +11,15 @@ import TodoListPanel from './components/TodoListPanel.vue';
 
 export default {
   name: 'App',
-  components: { UserPanel, TodoListPanel }
+  components: { UserPanel, TodoListPanel },
+  data: () => ({
+    selectedUserId: null,
+  }),
+  methods: {
+    setupSelectedUser(value) {
+      this.selectedUserId = value;
+    }
+  }
 }
 </script>
 

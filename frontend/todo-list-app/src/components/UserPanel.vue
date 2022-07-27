@@ -46,6 +46,7 @@ export default {
             this.users = await todoListService.getUsers();
             if (this.users.length != 0) {
                 this.selectedUser = this.users[0].id;
+                this.$emit("updateUserId", this.selectedUser);
             }
         },
         showPopup() {
@@ -59,6 +60,11 @@ export default {
         showEditPopup() {
             this.popupOpen = true;
             this.isEditMode = true;
+        }
+    },
+    watch: {
+        selectedUser(value) {
+            this.$emit("updateUserId", value);
         }
     }
 }
