@@ -21,6 +21,8 @@ const addCategory = (categoryInput) => httpService.post('/todoList/add-category'
 const updateCategory = (categoryInput) => httpService.post('/todoList/update-category', categoryInput);
 const removeCategory = (id) => httpService.post(`/todoList/remove-category/${id}`);
 
+const updateTask = (taskInput) => httpService.post('/todoList/update-task', taskInput);
+
 export default {
   getUsers,
   addUser,
@@ -28,5 +30,6 @@ export default {
   getCategories,
   addCategory,
   updateCategory,
-  removeCategory
+  removeCategory,
+  updateTask
 };

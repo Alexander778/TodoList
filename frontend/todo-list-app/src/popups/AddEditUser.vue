@@ -1,17 +1,17 @@
 <template>
     <div class="centerx">
-        <vs-popup class="holamundo" title="Add user" :active.sync="active">
+        <vs-popup :title="editMode ? `Edit user` : `Add user`" :active.sync="active">
             <vs-row>
-                <vs-col vs-type="flex-start" vs-justify="center" vs-align="center" vs-w="12">
+                <vs-col class="flex justify-center mb-2">
                     <vs-input placeholder="Name" v-model="user.name" />
                 </vs-col>
             </vs-row>
             <vs-row>
-                <vs-col vs-type="flex-start" vs-justify="center" vs-align="center" vs-w="12">
+                <vs-col class="flex justify-center mb-2">
                     <vs-input placeholder="Surname" v-model="user.surname" />
                 </vs-col>
             </vs-row>
-            <vs-row>
+            <vs-row class="flex justify-center">
                 <vs-button color="primary" :disabled="validToSubmit" @click="saveNewUser">Save</vs-button>
             </vs-row>
         </vs-popup>

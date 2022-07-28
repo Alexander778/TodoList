@@ -98,10 +98,10 @@ namespace TodoListAppApi.Controllers
         }
 
         [HttpPost]
-        [Route("update-task/{id}")]
-        public async Task<IActionResult> UpdateTodoTask(int id, [FromBody] TodoTaskInput todoTaskInput)
+        [Route("update-task")]
+        public async Task<IActionResult> UpdateTodoTask([FromBody] TodoTaskInput todoTaskInput)
         {
-            var categoryCreation = await _todoListService.UpdateTodoTask(id, todoTaskInput);
+            var categoryCreation = await _todoListService.UpdateTodoTask(todoTaskInput);
 
             return Ok(categoryCreation);
         }

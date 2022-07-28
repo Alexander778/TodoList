@@ -20,7 +20,7 @@ namespace TodoListAppBusiness.Interfaces
         Task<int> RemoveCategory(int id);
 
         Task<int> AddTodoTask(TodoTaskInput todoTaskInput);
-        Task<int> UpdateTodoTask(int id, TodoTaskInput todoTaskInput);
+        Task<int> UpdateTodoTask(TodoTaskInput todoTaskInput);
         Task<int> RemoveTodoTask(int id);
     }
 }

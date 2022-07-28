@@ -3,21 +3,25 @@
         <AddEditUser :openPopup.sync="popupOpen" @close="hidePopup" :editMode="isEditMode"
             :userToEdit="users.find(i => i.id == selectedUser)" />
         <vs-row vs-justify="center">
-            <vs-col type="flex" vs-justify="center" vs-align="center" vs-w="6">
+            <vs-col type="flex" vs-justify="center" vs-align="center" vs-w="2/4" class="mt-2">
                 <vs-card>
                     <div slot="header">
                         <h3>
                             Select user
                         </h3>
                     </div>
-                    <div>
-                        <vs-select class="selectExample" v-model="selectedUser">
-                            <vs-select-item :key="index" :value="user.id" :text="user.name + ' ' + user.surname"
-                                v-for="(user, index) in users" />
-                        </vs-select>
-                        <vs-button color="primary" icon="add" @click="showPopup"></vs-button>
-                        <vs-button color="primary" icon="edit" :disabled="selectedUser == null" @click="showEditPopup">
-                        </vs-button>
+                    <div class="flex">
+                        <div>
+                            <vs-select class="selectExample" v-model="selectedUser">
+                                <vs-select-item :key="index" :value="user.id" :text="user.name + ' ' + user.surname"
+                                    v-for="(user, index) in users" />
+                            </vs-select>
+                        </div>
+                        <div class="flex ml-1">
+                            <vs-button class="mr-1" color="primary" icon="add" @click="showPopup"></vs-button>
+                            <vs-button color="primary" icon="edit" :disabled="selectedUser == null"
+                                @click="showEditPopup"></vs-button>
+                        </div>
                     </div>
                 </vs-card>
             </vs-col>

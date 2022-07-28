@@ -2,34 +2,37 @@
     <div>
         <AddEditCategory :openPopup.sync="popupOpen" @close="hidePopup" :editMode="isEditMode"
             :categoryToEdit="categories.find(i => i.id == selectedCategory)" :activeUserId="selectedUserId" />
-        <vs-row vs-justify=" center">
-            <vs-col type="flex" vs-justify="center" vs-align="center" vs-w="6">
+        <vs-row vs-justify="center">
+            <vs-col type="flex" vs-justify="center" vs-align="center" vs-w="8">
                 <vs-card>
-                    <div slot="header">
+                    <div slot="header" class="flex justify-between">
                         <h3>
                             Todo list
                         </h3>
-                    </div>
-                    <div v-if="categories.length > 0">
-                        <vs-select v-model="selectedCategory">
-                            <vs-select-item :key="index" :value="category.id" :text="category.name"
-                                v-for="(category, index) in categories" />
-                        </vs-select>
-
-                        <vs-button color="primary" icon="edit" :disabled="selectedCategory == null"
-                            @click="showEditPopup">
-                        </vs-button>
-                        <div v-if="selectedCategoryObject.todoTasks.length > 0">
-                            <vs-list>
-                                <TodoTask :todoTask="todoTaskItem" :key="index"
-                                    v-for="(todoTaskItem, index) in selectedCategoryObject.todoTasks" />
-                            </vs-list>
+                        <div class="flex">
+                            <div v-if="categories.length > 0">
+                                <vs-select v-model="selectedCategory">
+                                    <vs-select-item :key="index" :value="category.id" :text="category.name"
+                                        v-for="(category, index) in categories" />
+                                </vs-select>
+                            </div>
+                            <div v-else class="mt-2">
+                                <h3>You haven't had any categories yet. Please add new one.</h3>
+                            </div>
+                            <div class="flex ml-1">
+                                <vs-button class="mr-1 ml-1" color="primary" icon="add" @click="showPopup"></vs-button>
+                                <vs-button v-if="categories.length > 0" color="primary" icon="edit"
+                                    :disabled="selectedCategory == null" @click="showEditPopup">
+                                </vs-button>
+                            </div>
                         </div>
                     </div>
-                    <div v-else>
-                        <h3>You haven't had any categories yet.</h3>
+                    <div v-if="selectedCategoryObject?.todoTasks.length > 0">
+                        <vs-list>
+                            <TodoTask :todoTask="todoTaskItem" :key="index"
+                                v-for="(todoTaskItem, index) in selectedCategoryObject.todoTasks" />
+                        </vs-list>
                     </div>
-                    <vs-button color="primary" icon="add" @click="showPopup"></vs-button>
                 </vs-card>
             </vs-col>
         </vs-row>

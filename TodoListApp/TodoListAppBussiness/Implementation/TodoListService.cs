@@ -141,9 +141,9 @@ namespace TodoListAppBusiness.Implementation
             return await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<int> UpdateTodoTask(int id, TodoTaskInput todoTaskInput)
+        public async Task<int> UpdateTodoTask(TodoTaskInput todoTaskInput)
         {
-            var todoTaskToUpdate = _dbContext.TodoTasks.FirstOrDefault(i => i.Id == id);
+            var todoTaskToUpdate = _dbContext.TodoTasks.FirstOrDefault(i => i.Id == todoTaskInput.Id);
             if (todoTaskToUpdate == null)
             {
                 throw new ArgumentNullException("TodoTask was not found");
