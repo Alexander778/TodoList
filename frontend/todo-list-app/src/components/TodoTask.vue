@@ -1,7 +1,13 @@
 <template>
     <div>
         <vs-list-item :title="this.todoTask.text" class="h-10" :style="todoTaskStyle">
-            <vs-checkbox v-model="taskDone" color="primary" @change="check($event)" />
+            <template slot="avatar">
+                <vs-checkbox v-model="taskDone" color="primary" @change="check($event)" />
+            </template>
+            <div class="flex">
+                <vs-button size="small" color="primary" type="flat" icon="edit" @click="editTask()"></vs-button>
+                <vs-button size="small" color="danger" type="flat" icon="delete" @click="removeTask()"></vs-button>
+            </div>
         </vs-list-item>
     </div>
 </template>
@@ -32,6 +38,16 @@ export default {
             let todoTask = this.todoTask;
             todoTask.statusId = e.target.checked ? 2 : 1;
             await todoListService.updateTask(todoTask);
+        },
+        async removeTask() {
+            console.log(this.todoTask.id);
+            const response = await todoListService.removeTask(this.todoTask.id);
+            if (response === 1) {
+                // update list
+            }
+        },
+        editTask() {
+            this.$emit("edit", this.todoTask);
         }
     }
 }

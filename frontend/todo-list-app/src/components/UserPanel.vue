@@ -18,9 +18,19 @@
                             </vs-select>
                         </div>
                         <div class="flex ml-1">
-                            <vs-button class="mr-1" color="primary" icon="add" @click="showPopup"></vs-button>
-                            <vs-button color="primary" icon="edit" :disabled="selectedUser == null"
-                                @click="showEditPopup"></vs-button>
+                            <vs-dropdown>
+                                <a class="a-icon" href="#">
+                                    <vs-icon class="" icon="more_vert"></vs-icon>
+                                </a>
+                                <vs-dropdown-menu>
+                                    <vs-dropdown-item @click="showPopup">
+                                        Add user
+                                    </vs-dropdown-item>
+                                    <vs-dropdown-item @click="showEditPopup">
+                                        Edit selected user
+                                    </vs-dropdown-item>
+                                </vs-dropdown-menu>
+                            </vs-dropdown>
                         </div>
                     </div>
                 </vs-card>

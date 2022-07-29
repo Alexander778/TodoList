@@ -12,7 +12,7 @@ const getCategories = (userId, categoryId = null, todoTaskStatusId = null) => {
   }
 
   if (todoTaskStatusId != null) {
-    queryString += `&todoStatusId=${categoryId}`;
+    queryString += `&todoTaskStatusId=${todoTaskStatusId}`;
   }
 
   return httpService.get(queryString);
@@ -21,7 +21,9 @@ const addCategory = (categoryInput) => httpService.post('/todoList/add-category'
 const updateCategory = (categoryInput) => httpService.post('/todoList/update-category', categoryInput);
 const removeCategory = (id) => httpService.post(`/todoList/remove-category/${id}`);
 
+const addTask = (taskInput) => httpService.post('/todoList/add-task', taskInput);
 const updateTask = (taskInput) => httpService.post('/todoList/update-task', taskInput);
+const removeTask = (id) => httpService.post(`/todoList/remove-task/${id}`);
 
 export default {
   getUsers,
@@ -31,5 +33,7 @@ export default {
   addCategory,
   updateCategory,
   removeCategory,
-  updateTask
+  addTask,
+  updateTask,
+  removeTask
 };

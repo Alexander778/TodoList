@@ -65,7 +65,7 @@ namespace TodoListAppBusiness.Implementation
 
             if (categoryId != null)
             {
-                expression.And(i => i.Id == categoryId);
+                expression = expression.And(i => i.Id == categoryId);
             }
 
             List<Category> userCategories = await _dbContext.Categories.Where(expression)

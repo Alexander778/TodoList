@@ -106,7 +106,7 @@ namespace TodoListAppApi.Controllers
             return Ok(categoryCreation);
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Route("remove-task/{id}")]
         public async Task<IActionResult> RemoveTodoTask(int id)
         {
