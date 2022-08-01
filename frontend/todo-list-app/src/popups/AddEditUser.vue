@@ -31,7 +31,7 @@ export default {
     },
     data: () => ({
         user: {
-            id: "",
+            id: 0,
             name: "",
             surname: ""
         }
@@ -67,16 +67,19 @@ export default {
         },
         async saveNewUser() {
             let response = "";
+            let notificationText = "";
             if (this.editMode) {
+                notificationText = "User was updated successfully";
                 response = await todoListService.updateUser(this.user);
             } else {
+                notificationText = "User was created successfully";
                 response = await todoListService.addUser(this.user);
             }
             if (response == 1) {
                 this.resetForm();
                 this.$emit('close', false);
             }
-            // TODO: add loader, success/error notification
+            this.$vs.notify({ title: 'Success', text: notificationText });
         }
     }
 }

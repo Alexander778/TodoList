@@ -43,7 +43,7 @@ export default {
         async removeTask() {
             const response = await todoListService.removeTask(this.todoTask.id);
             if (response === 1) {
-                // update list
+                this.$emit("updateList");
             }
         },
         editTask() {

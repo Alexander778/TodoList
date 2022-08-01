@@ -42,7 +42,8 @@
                     <div v-if="selectedCategoryObject !== null && selectedCategoryObject.todoTasks.length > 0">
                         <vs-list>
                             <TodoTask :todoTask="todoTaskItem" :key="index"
-                                v-for="(todoTaskItem, index) in selectedCategoryObject.todoTasks" @edit="editTask" />
+                                v-for="(todoTaskItem, index) in selectedCategoryObject.todoTasks" @edit="editTask"
+                                @updateList="getCategories(selectedUserId, selectedCategory)" />
                         </vs-list>
                     </div>
                     <div slot="footer" class="mt-10">
