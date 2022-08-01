@@ -61,26 +61,13 @@ namespace TodoListAppBusiness.Implementation
 
         public async Task<IEnumerable<Category>> GetCategoriesByUser(int userId, int? categoryId = null, int? todoTaskStatusId = null)
         {
-            Expression<Func<Category, bool>> expression = i => i.UserId == userId;
-
-            if (categoryId != null)
-            {
-                expression = expression.And(i => i.Id == categoryId);
-            }
-
-            List<Category> userCategories = await _dbContext.Categories.Where(expression)
-                .Include(i => i.TodoTasks)
+            return await _dbContext.Categories
+                .Where(i => i.UserId == userId)
+                .Include(i => i.TodoTasks
+                    .Where(x => ((categoryId != null) ? x.CategoryId == categoryId : true)
+                        && ((todoTaskStatusId != null) ? x.StatusId == todoTaskStatusId : true)))
                 .ToListAsync();
 
-            if (todoTaskStatusId != null)
-            {
-                foreach (var userCategory in userCategories)
-                {
-                    userCategory.TodoTasks = userCategory.TodoTasks.Where(i => i.StatusId == todoTaskStatusId).ToList();
-                }
-            }
-
-            return userCategories;
         }
         public async Task<int> AddCategory(CategoryInput categoryInput)
         {

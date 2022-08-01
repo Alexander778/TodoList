@@ -25,8 +25,9 @@ export default {
     }),
     computed: {
         todoTaskStyle() {
+            console.log('todoTaskStyle', this.todoTask, this.taskDone);
             return {
-                'text-decoration': this.taskDone ? 'line-through' : 'normal',
+                'text-decoration': this.taskDone ? 'line-through' : '',
             };
         }
     },
@@ -40,7 +41,6 @@ export default {
             await todoListService.updateTask(todoTask);
         },
         async removeTask() {
-            console.log(this.todoTask.id);
             const response = await todoListService.removeTask(this.todoTask.id);
             if (response === 1) {
                 // update list

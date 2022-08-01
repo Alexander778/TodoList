@@ -22,9 +22,6 @@
                                         v-for="(category, index) in categories" />
                                 </vs-select>
                             </div>
-                            <div v-else class="mt-2">
-                                <h3>You haven't had any categories yet. Please add new one.</h3>
-                            </div>
                             <div class="flex ml-1">
                                 <vs-dropdown>
                                     <a class="a-icon" href="#">
@@ -42,7 +39,7 @@
                             </div>
                         </div>
                     </div>
-                    <div v-if="selectedCategoryObject?.todoTasks.length > 0">
+                    <div v-if="selectedCategoryObject !== null && selectedCategoryObject.todoTasks.length > 0">
                         <vs-list>
                             <TodoTask :todoTask="todoTaskItem" :key="index"
                                 v-for="(todoTaskItem, index) in selectedCategoryObject.todoTasks" @edit="editTask" />
@@ -88,14 +85,15 @@ export default {
         }
     },
     methods: {
-        async getCategories(userId) {
-            this.categories = await todoListService.getCategories(userId);
+        async getCategories(userId, categoryId = null, todoTaskStatusId = null) {
+            this.categories = await todoListService.getCategories(userId, categoryId, todoTaskStatusId);
             if (this.categories.length != 0) {
-                this.selectedCategory = this.categories[0].id;
-                this.selectedCategoryObject = this.categories[0];
+                this.selectedCategory = this.selectedCategory === null ? this.categories[0].id : this.selectedCategory;
+                this.selectedCategoryObject = this.categories.find(i => i.id == this.selectedCategory);
             } else {
                 this.categories = [];
                 this.selectedCategory = null;
+                this.selectedCategoryObject = null;
             }
         },
         showPopup() {
@@ -132,12 +130,11 @@ export default {
             await this.getCategories(value, this.selectedCategory);
         },
         async selectedCategory(value) {
-            await todoListService.getCategories(this.selectedUserId, value);
+            await this.getCategories(this.selectedUserId, value);
         },
         async showDoneTasks(value) {
-            console.log(value);
             let statusId = value ? 2 : null;
-            await todoListService.getCategories(this.selectedUserId, this.selectedCategory, statusId);
+            await this.getCategories(this.selectedUserId, this.selectedCategory, statusId);
         }
     }
 }
