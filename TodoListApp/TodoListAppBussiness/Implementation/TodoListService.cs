@@ -38,32 +38,36 @@ namespace TodoListAppBusiness.Implementation
 
             return await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<int> UpdateUser(UserInput userInput)
+        {
+            var userToUpdate = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userInput.Id);
+            if (userToUpdate == null)
+            {
+                throw new ArgumentException("User was not found. Nothing to update");
+            }
+
+            userToUpdate.Name = userInput.Name;
+            userToUpdate.Surname = userInput.Surname;
+
+            _dbContext.Users.Update(userToUpdate);
+
+            return await _dbContext.SaveChangesAsync();
+        }
+
         #endregion
 
         #region Category CRUD
 
         public async Task<IEnumerable<Category>> GetCategoriesByUser(int userId, int? categoryId = null, int? todoTaskStatusId = null)
         {
-            Expression<Func<Category, bool>> expression = i => i.UserId == userId;
-
-            if (categoryId != null)
-            {
-                expression.And(i => i.Id == categoryId);
-            }
-
-            List<Category> userCategories = await _dbContext.Categories.Where(expression)
-                .Include(i => i.TodoTasks)
+            return await _dbContext.Categories
+                .Where(i => i.UserId == userId)
+                .Include(i => i.TodoTasks
+                    .Where(x => ((categoryId != null) ? x.CategoryId == categoryId : true)
+                        && ((todoTaskStatusId != null) ? x.StatusId == todoTaskStatusId : true)))
                 .ToListAsync();
 
-            if (todoTaskStatusId != null)
-            {
-                foreach (var userCategory in userCategories)
-                {
-                    userCategory.TodoTasks = userCategory.TodoTasks.Where(i => i.StatusId == todoTaskStatusId).ToList();
-                }
-            }
-
-            return userCategories;
         }
         public async Task<int> AddCategory(CategoryInput categoryInput)
         {
@@ -78,9 +82,9 @@ namespace TodoListAppBusiness.Implementation
             return await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<int> UpdateCategory(int id, CategoryInput categoryInput)
+        public async Task<int> UpdateCategory(CategoryInput categoryInput)
         {
-            var categoryToUpdate = _dbContext.Categories.FirstOrDefault(i => i.Id == id);
+            var categoryToUpdate = _dbContext.Categories.FirstOrDefault(i => i.Id == categoryInput.Id);
             if (categoryToUpdate == null)
             {
                 throw new ArgumentNullException("Category was not found");
@@ -124,9 +128,9 @@ namespace TodoListAppBusiness.Implementation
             return await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<int> UpdateTodoTask(int id, TodoTaskInput todoTaskInput)
+        public async Task<int> UpdateTodoTask(TodoTaskInput todoTaskInput)
         {
-            var todoTaskToUpdate = _dbContext.TodoTasks.FirstOrDefault(i => i.Id == id);
+            var todoTaskToUpdate = _dbContext.TodoTasks.FirstOrDefault(i => i.Id == todoTaskInput.Id);
             if (todoTaskToUpdate == null)
             {
                 throw new ArgumentNullException("TodoTask was not found");
