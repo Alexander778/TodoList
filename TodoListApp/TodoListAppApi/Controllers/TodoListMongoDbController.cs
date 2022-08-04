@@ -69,9 +69,9 @@ namespace TodoListAppApi.Controllers
 
         [HttpPost]
         [Route("update-category")]
-        public async Task<IActionResult> UpdateCategory(string userId, string name, [FromBody] Category categoryInput)
+        public async Task<IActionResult> UpdateCategory(string userId, string categoryId, [FromBody] Category categoryInput)
         {
-            await _todoListService.UpdateCategory(userId, name, categoryInput);
+            await _todoListService.UpdateCategory(userId, categoryId, categoryInput);
 
             return Ok();
         }
@@ -87,25 +87,25 @@ namespace TodoListAppApi.Controllers
 
         //#endregion
 
-        //#region TodoTask
+        #region TodoTask
 
-        //[HttpPost]
-        //[Route("add-task")]
-        //public async Task<IActionResult> AddTodoTask([FromBody] TodoTaskInput todoTaskInput)
-        //{
-        //    var categoryCreation = await _todoListService.AddTodoTask(todoTaskInput);
+        [HttpPost]
+        [Route("add-task")]
+        public async Task<IActionResult> AddTodoTask(string userId, string categoryId, [FromBody] TodoTask todoTaskInput)
+        {
+            await _todoListService.AddTodoTask(userId, categoryId, todoTaskInput);
 
-        //    return Ok(categoryCreation);
-        //}
+            return Ok();
+        }
 
-        //[HttpPost]
-        //[Route("update-task")]
-        //public async Task<IActionResult> UpdateTodoTask([FromBody] TodoTaskInput todoTaskInput)
-        //{
-        //    var categoryCreation = await _todoListService.UpdateTodoTask(todoTaskInput);
+        [HttpPost]
+        [Route("update-task")]
+        public async Task<IActionResult> UpdateTodoTask(string userId, string categoryId, [FromBody] TodoTask todoTaskInput)
+        {
+            await _todoListService.UpdateTodoTask(userId, categoryId, todoTaskInput);
 
-        //    return Ok(categoryCreation);
-        //}
+            return Ok();
+        }
 
         //[HttpPost]
         //[Route("remove-task/{id}")]
@@ -116,6 +116,6 @@ namespace TodoListAppApi.Controllers
         //    return Ok(categoryCreation);
         //}
 
-        //#endregion
+        #endregion
     }
 }

@@ -20,7 +20,6 @@ namespace TodoListAppData.MongoDbModels
 
         [BsonElement("Categories")]
         [JsonPropertyName("Categories")]
-        public List<Category> Categories { get; set; } = null!;
-
+        public List<Category> Categories { get; set; }
     }
 }

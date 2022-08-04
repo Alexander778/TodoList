@@ -10,5 +10,9 @@ namespace TodoListAppBusiness.Interfaces
 
         Task AddCategory(string userId, Category categoryInput);
         Task UpdateCategory(string userId, string name, Category categoryInput);
+
+        Task AddTodoTask(string userId, string categoryId, TodoTask todoTaskInput);
+
+        Task UpdateTodoTask(string userId, string categoryId, TodoTask todoTaskInput);
     }
 }

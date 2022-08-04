@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace TodoListAppData.MongoDbModels
 {
-    public class Category
+    public class TodoTask
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -14,8 +14,8 @@ namespace TodoListAppData.MongoDbModels
         [JsonPropertyName("Name")]
         public string Name { get; set; } = null!;
 
-        [BsonElement("TodoTasks")]
-        [JsonPropertyName("TodoTasks")]
-        public List<TodoTask> TodoTasks { get; set; }
+        [BsonElement("DoneStatus")]
+        [JsonPropertyName("DoneStatus")]
+        public bool DoneStatus { get; set; }
     }
 }
